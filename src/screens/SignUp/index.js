@@ -1,17 +1,27 @@
-import React, {useRef} from 'react';
+import React, {useState, useRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Image} from 'react-native';
-import logo from '~/assets/logo.png';
 
+import {signUpRequest} from '~/store/modules/auth/actions';
+import logo from '~/assets/logo.png';
 import Background from '~/components/Background';
 
 import * as S from './styles';
 
 export default function SignUp({navigation}) {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const emailRef = useRef();
   const pwdRef = useRef();
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
 
-  function handleSubmit() {}
+  function handleSubmit() {
+    dispatch(signUpRequest(name, email, password));
+  }
 
   return (
     <Background>
@@ -24,6 +34,8 @@ export default function SignUp({navigation}) {
             placeholder="Nome completo"
             returnKeyType="next"
             onSubmitEditing={() => emailRef.current.focus()}
+            value={name}
+            onChangeText={setName}
           />
 
           <S.FormInput
@@ -35,6 +47,8 @@ export default function SignUp({navigation}) {
             ref={emailRef}
             returnKeyType="next"
             onSubmitEditing={() => pwdRef.current.focus()}
+            value={email}
+            onChangeText={setEmail}
           />
 
           <S.FormInput
@@ -44,9 +58,13 @@ export default function SignUp({navigation}) {
             ref={pwdRef}
             returnKeyType="send"
             onSubmitEditing={handleSubmit}
+            value={password}
+            onChangeText={setPassword}
           />
 
-          <S.SubmitButton onPress={() => {}}>Acessar</S.SubmitButton>
+          <S.SubmitButton onPress={handleSubmit} loading={loading}>
+            Criar conta
+          </S.SubmitButton>
         </S.Form>
 
         <S.SignLink onPress={() => navigation.navigate('SignIn')}>
