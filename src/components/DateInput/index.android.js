@@ -6,7 +6,7 @@ import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as S from './styles';
 
-export default function DateTimeInput({date, onChange}) {
+export default function DateInput({date, onChange}) {
   const dateFormatted = useMemo(() => {
     return format(date, "dd 'de' MMMM 'de' yyyy", {locale: pt});
   }, [date]);

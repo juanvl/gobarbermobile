@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import * as S from './styles';
 
-export default function DateTimeInput({date, onChange}) {
+export default function DateInput({date, onChange}) {
   const [opened, setOpened] = useState(false);
 
   const dateFormatted = useMemo(() => {
